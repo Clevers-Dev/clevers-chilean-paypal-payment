@@ -1,0 +1,14 @@
+.git
+.github
+.gitignore
+.gitattributes
+.distignore
+.idea
+.DS_Store
+.release-build
+bin
+nbproject
+*.lock
+*.log
+*.zip
+README.md

@@ -1,0 +1,10 @@
+.phpunit.result.cache
+.DS_Store
+/.idea/
+/nbproject/
+/dist/
+/dist-*/
+/svn-dist/
+/svn-dist-*/
+/clevers-chilean-paypal-payment/
+/vendor/

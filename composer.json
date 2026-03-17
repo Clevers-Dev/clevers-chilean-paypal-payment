@@ -1,0 +1,15 @@
+{
+    "name": "clevers/clevers-chilean-paypal-payment",
+    "description": "WooCommerce PayPal Standard payment bridge for stores that sell in CLP and charge in USD.",
+    "license": "GPL-2.0-or-later",
+    "type": "wordpress-plugin",
+    "require": {},
+    "scripts": {
+        "lint": "find . -path './.git' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.0"
+        }
+    }
+}
