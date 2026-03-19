@@ -11,9 +11,22 @@ class CleversPaypalPaymentExchangeRate {
     private $url = 'https://open.er-api.com/v6/latest/USD';
 
     /**
+     * @var string
+     */
+    private $apiKey = '';
+
+    /**
      * @var object|false|null
      */
     private $exchangeRates;
+
+    public function __construct($api_key = '') {
+        $this->apiKey = is_string($api_key) ? trim($api_key) : '';
+
+        if ('' !== $this->apiKey) {
+            $this->url = 'https://v6.exchangerate-api.com/v6/' . rawurlencode($this->apiKey) . '/latest/USD';
+        }
+    }
 
     private function maybeLoadExchangeRates() {
         if (null !== $this->exchangeRates) {
@@ -41,6 +54,12 @@ class CleversPaypalPaymentExchangeRate {
         }
 
         $this->exchangeRates = json_decode($json);
+
+        if (!empty($this->apiKey) && is_object($this->exchangeRates) && isset($this->exchangeRates->result) && 'success' !== $this->exchangeRates->result) {
+            $this->url = 'https://open.er-api.com/v6/latest/USD';
+            $this->exchangeRates = null;
+            $this->maybeLoadExchangeRates();
+        }
     }
 
     public function clpToUsd($clp) {
@@ -72,6 +91,10 @@ class CleversPaypalPaymentExchangeRate {
 
         if (!isset($this->exchangeRates->result) || 'success' !== $this->exchangeRates->result) {
             return null;
+        }
+
+        if (isset($this->exchangeRates->conversion_rates) && isset($this->exchangeRates->conversion_rates->CLP)) {
+            return (float) $this->exchangeRates->conversion_rates->CLP;
         }
 
         if (!isset($this->exchangeRates->rates) || !isset($this->exchangeRates->rates->CLP)) {
