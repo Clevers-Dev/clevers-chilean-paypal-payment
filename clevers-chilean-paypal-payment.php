@@ -3,7 +3,7 @@
  * Plugin Name: Clevers Chilean PayPal Payment
  * Description: Lets WooCommerce stores sell in CLP while sending PayPal Standard payments in USD.
  * Author: Clevers
- * Version: 1.0.2
+ * Version: 1.0.3
  * Requires at least: 6.0
  * Requires Plugins: woocommerce
  * Requires PHP: 7.4
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('CLEVERS_CHILEAN_PAYPAL_PAYMENT_VERSION', '1.0.2');
+define('CLEVERS_CHILEAN_PAYPAL_PAYMENT_VERSION', '1.0.3');
 define('CLEVERS_CHILEAN_PAYPAL_PAYMENT_PLUGIN_FILE', __FILE__);
 define('CLEVERS_CHILEAN_PAYPAL_PAYMENT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CLEVERS_CHILEAN_PAYPAL_PAYMENT_OPTIONS_KEY', 'clevers_chilean_paypal_payment_options');
