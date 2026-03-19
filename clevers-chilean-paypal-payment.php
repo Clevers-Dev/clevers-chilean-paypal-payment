@@ -75,6 +75,7 @@ function clevers_chilean_paypal_payment_get_options() {
     $defaults = array(
         'id_fijo_dolar' => CLEVERS_CHILEAN_PAYPAL_PAYMENT_DEFAULT_USD_CLP_RATE,
         'id_check_usarfijodolar' => '',
+        'paypal_email' => '',
     );
 
     $options = get_option(CLEVERS_CHILEAN_PAYPAL_PAYMENT_OPTIONS_KEY, array());
@@ -137,6 +138,12 @@ function clevers_chilean_paypal_payment_get_usd_rate() {
 }
 
 function clevers_chilean_paypal_payment_convert_paypal_args($paypal_args) {
+    $options = clevers_chilean_paypal_payment_get_options();
+
+    if (!empty($options['paypal_email'])) {
+        $paypal_args['business'] = sanitize_email($options['paypal_email']);
+    }
+
     if (!isset($paypal_args['currency_code']) || 'CLP' !== $paypal_args['currency_code']) {
         return $paypal_args;
     }

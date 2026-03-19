@@ -68,6 +68,14 @@ class CleversChileanPaypalPaymentSettingsPage {
             'clevers-chilean-paypal-payment',
             'clevers_chilean_paypal_payment_default_values'
         );
+
+        add_settings_field(
+            'paypal_email',
+            'PayPal receiver email',
+            array($this, 'paypalEmailCallback'),
+            'clevers-chilean-paypal-payment',
+            'clevers_chilean_paypal_payment_default_values'
+        );
     }
 
     public function sanitize($input) {
@@ -75,6 +83,14 @@ class CleversChileanPaypalPaymentSettingsPage {
 
         if (isset($input['id_fijo_dolar'])) {
             $new_input['id_fijo_dolar'] = absint($input['id_fijo_dolar']);
+        }
+
+        if (isset($input['paypal_email'])) {
+            $sanitized_email = sanitize_email($input['paypal_email']);
+
+            if (!empty($sanitized_email)) {
+                $new_input['paypal_email'] = $sanitized_email;
+            }
         }
 
         $new_input['id_check_usarfijodolar'] = isset($input['id_check_usarfijodolar']) ? 'on' : '';
@@ -102,5 +118,15 @@ class CleversChileanPaypalPaymentSettingsPage {
             esc_attr(CLEVERS_CHILEAN_PAYPAL_PAYMENT_OPTIONS_KEY),
             checked(isset($this->options['id_check_usarfijodolar']) ? $this->options['id_check_usarfijodolar'] : '', 'on', false)
         );
+    }
+
+    public function paypalEmailCallback() {
+        printf(
+            '<input type="email" id="paypal_email" name="%s[paypal_email]" value="%s" class="regular-text" placeholder="paypal@example.com" />',
+            esc_attr(CLEVERS_CHILEAN_PAYPAL_PAYMENT_OPTIONS_KEY),
+            isset($this->options['paypal_email']) ? esc_attr($this->options['paypal_email']) : ''
+        );
+
+        echo '<p class="description">' . esc_html__('WooCommerce will send this PayPal account email as the payment receiver for PayPal Standard.', 'clevers-chilean-paypal-payment') . '</p>';
     }
 }
